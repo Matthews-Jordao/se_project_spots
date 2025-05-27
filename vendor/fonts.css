@@ -3,7 +3,7 @@
   font-family: "Poppins";
   font-style: normal;
   font-weight: 400;
-  src: url("../vendor/fonts/Poppins/Poppins-Regular.ttf") format("truetype");
+  src: url("../vendor/fonts/Poppins-Regular.ttf") format("truetype");
 }
 
 /* Poppins Medium */
@@ -11,5 +11,5 @@
   font-family: "Poppins";
   font-style: normal;
   font-weight: 500;
-  src: url("../vendor/fonts/Poppins/Poppins-Medium.ttf") format("truetype");
+  src: url("../vendor/fonts/Poppins-Medium.ttf") format("truetype");
 }

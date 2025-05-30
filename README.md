@@ -29,5 +29,5 @@ Video Description: (https://drive.google.com/file/d/1YX_reK9dbkx5Uens1nSsp5bjV6s
 
 ## Deployment
 
-[View the deployed project on GitHub Pages](https://github.com/Matthews-Jordao/se_project_spots)
+[View the deployed project on GitHub Pages](https://matthews-jordao.github.io/se_project_spots/)
 

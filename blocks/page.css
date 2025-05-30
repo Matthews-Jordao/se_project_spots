@@ -8,3 +8,13 @@
   max-width: 1280px;
   margin: 0 auto;
 }
+
+@media screen and (max-width: 627px) {
+  .page__section {
+    width: 100%;
+    max-width: 288px;
+    min-width: 0;
+    margin: 0 auto;
+  }
+
+}

@@ -1,10 +1,10 @@
 .footer {
-  margin: 60px auto 0;
+  margin: 0 auto ;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 400;
-  padding-bottom: 60px;
+  padding: 60px 0;
 }
 
 .footer__copyright {
@@ -13,5 +13,6 @@
   font-weight: 400;
   font-size: 16px;
   line-height: 100%;
-  letter-spacing: 0%;
+  letter-spacing: 0;
+  color: rgba(33, 33, 33, 0.7)2;
 }

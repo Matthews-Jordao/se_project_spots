@@ -13,6 +13,7 @@
   white-space: nowrap;
   overflow: hidden;
   color: #212121;
+  max-width: 85%;
 }
 
 .card__image {
@@ -41,7 +42,7 @@
   background-size: contain;
   opacity: 0.4;
   transition: opacity 0.2s;
-
+  cursor: pointer;
 
 }
 

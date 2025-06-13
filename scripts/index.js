@@ -1,48 +1,69 @@
 // Log to verify script is connected
 console.log('Script loaded!');
 
-// Constants for class names and selectors
+// Modal open/close class
 const MODAL_OPENED_CLASS = 'modal_is-opened';
-const EDIT_PROFILE_MODAL_ID = 'edit-profile-modal';
-const NEW_POST_MODAL_ID = 'new-post-modal';
-const EDIT_PROFILE_BTN_CLASS = 'profile__edit-btn';
-const NEW_POST_BTN_CLASS = 'profile__add-btn';
-const CLOSE_BTN_CLASS = 'modal__close-btn';
 
-// Utility function to open a modal
+// Profile elements (displayed on page)
+const profileNameElement = document.querySelector('.profile__name');
+const profileDescriptionElement = document.querySelector('.profile__description');
+
+// Edit Profile Modal and form elements
+const editProfileModal = document.getElementById('edit-profile-modal');
+const profileFormElement = editProfileModal.querySelector('.modal__form');
+const nameInput = profileFormElement.querySelector('#profile-name-input');
+const descriptionInput = profileFormElement.querySelector('#profile-description-input');
+const editProfileBtn = document.querySelector('.profile__edit-btn');
+const editProfileCloseBtn = editProfileModal.querySelector('.modal__close-btn');
+
+// New Post Modal and form elements
+const newPostModal = document.getElementById('new-post-modal');
+const addCardFormElement = newPostModal.querySelector('.modal__form');
+const cardImageInput = addCardFormElement.querySelector('#card-image-input');
+const cardCaptionInput = addCardFormElement.querySelector('#card-caption-input');
+const newPostBtn = document.querySelector('.profile__add-btn');
+const newPostCloseBtn = newPostModal.querySelector('.modal__close-btn');
+
+// Utility functions
 function openModal(modal) {
   modal.classList.add(MODAL_OPENED_CLASS);
 }
-
-// Utility function to close a modal
 function closeModal(modal) {
   modal.classList.remove(MODAL_OPENED_CLASS);
 }
 
-// Get modal elements
-const editProfileModal = document.getElementById(EDIT_PROFILE_MODAL_ID);
-const newPostModal = document.getElementById(NEW_POST_MODAL_ID);
-
-// Get open buttons
-const editProfileBtn = document.querySelector(`.${EDIT_PROFILE_BTN_CLASS}`);
-const newPostBtn = document.querySelector(`.${NEW_POST_BTN_CLASS}`);
-
-// Get close buttons
-const editProfileCloseBtn = editProfileModal.querySelector(`.${CLOSE_BTN_CLASS}`);
-const newPostCloseBtn = newPostModal.querySelector(`.${CLOSE_BTN_CLASS}`);
-
-// Event listeners for opening modals
-editProfileBtn.addEventListener('click', function handleEditProfileOpen() {
+// Open Edit Profile Modal and pre-fill fields
+editProfileBtn.addEventListener('click', function () {
+  nameInput.value = profileNameElement.textContent;
+  descriptionInput.value = profileDescriptionElement.textContent;
   openModal(editProfileModal);
 });
-newPostBtn.addEventListener('click', function handleNewPostOpen() {
+
+// Open New Post Modal
+newPostBtn.addEventListener('click', function () {
   openModal(newPostModal);
 });
 
-// Event listeners for closing modals
-editProfileCloseBtn.addEventListener('click', function handleEditProfileClose() {
+// Close modals
+editProfileCloseBtn.addEventListener('click', function () {
   closeModal(editProfileModal);
 });
-newPostCloseBtn.addEventListener('click', function handleNewPostClose() {
+newPostCloseBtn.addEventListener('click', function () {
+  closeModal(newPostModal);
+});
+
+// Edit Profile form submit
+profileFormElement.addEventListener('submit', function (evt) {
+  evt.preventDefault();
+  profileNameElement.textContent = nameInput.value;
+  profileDescriptionElement.textContent = descriptionInput.value;
+  closeModal(editProfileModal);
+});
+
+// New Post form submit (log values)
+addCardFormElement.addEventListener('submit', function (evt) {
+  evt.preventDefault();
+  console.log('Image link:', cardImageInput.value);
+  console.log('Caption:', cardCaptionInput.value);
   closeModal(newPostModal);
 });

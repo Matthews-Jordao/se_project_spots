@@ -71,6 +71,7 @@ function getCardElement(data) {
   const cardTitle = cardElement.querySelector('.card__title');
   const cardImage = cardElement.querySelector('.card__image');
   const likeBtn = cardElement.querySelector('.card__like-btn');
+  const deleteBtn = cardElement.querySelector('.card__delete-btn');
 
   cardTitle.textContent = data.name;
   cardImage.src = data.link;
@@ -79,6 +80,11 @@ function getCardElement(data) {
   // Like button toggle
   likeBtn.addEventListener('click', function () {
     likeBtn.classList.toggle('card__like-btn_active');
+  });
+
+  // Delete button removes the card
+  deleteBtn.addEventListener('click', function () {
+    cardElement.remove();
   });
 
   return cardElement;

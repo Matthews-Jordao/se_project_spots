@@ -1,5 +1,6 @@
 .card {
   max-width: 413px;
+  position: relative; /* Needed for absolute positioning of delete button */
 }
 
 .card__title {
@@ -57,6 +58,35 @@
 
 .card__like-btn_active:hover {
   opacity: 0.5;
+}
+
+/* Delete button styles */
+.card__delete-btn {
+  position: absolute;      /* <-- Add this line */
+  top: 10px;
+  right: 10px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.card__delete-icon {
+  width: 32px;
+  height: 32px;
+  display: block;
+  transition: opacity 0.2s;
+}
+
+/* Change icon on hover */
+.card__delete-btn:hover .card__delete-icon {
+  content: url("../images/trash-hover.svg");
 }
 
 @media screen and (max-width: 627px) {

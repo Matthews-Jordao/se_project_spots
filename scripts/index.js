@@ -24,8 +24,12 @@ const cardCaptionInput = addCardFormElement.querySelector('#card-caption-input')
 const newPostBtn = document.querySelector('.profile__add-btn');
 const newPostCloseBtn = newPostModal.querySelector('.modal__close-btn');
 
-// 1. Create an array of initial cards
+// Example initialCards array (add your own data as needed)
 const initialCards = [
+  {
+    name: "Landscape Example",
+    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg"
+  },
   {
     name: "Val Thorens",
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg"
@@ -55,6 +59,29 @@ const initialCards = [
 // 2. Loop through the array and log each card's name
 initialCards.forEach(function(card) {
   console.log(card.name);
+});
+
+// Select the template and the cards container
+const cardTemplate = document.getElementById('card-template');
+const cardsList = document.querySelector('.cards__list');
+
+// Function to generate a card element from data
+function getCardElement(data) {
+  const cardElement = cardTemplate.content.firstElementChild.cloneNode(true);
+  const cardTitle = cardElement.querySelector('.card__title');
+  const cardImage = cardElement.querySelector('.card__image');
+
+  cardTitle.textContent = data.name;
+  cardImage.src = data.link;
+  cardImage.alt = data.name;
+
+  return cardElement;
+}
+
+// Render all initial cards
+initialCards.forEach(function(cardData) {
+  const cardElement = getCardElement(cardData);
+  cardsList.append(cardElement); // Use prepend to add new cards to the top
 });
 
 // Utility functions
@@ -93,10 +120,25 @@ profileFormElement.addEventListener('submit', function (evt) {
   closeModal(editProfileModal);
 });
 
-// New Post form submit (log values)
+// New Post form submit (add new card)
 addCardFormElement.addEventListener('submit', function (evt) {
   evt.preventDefault();
-  console.log('Image link:', cardImageInput.value);
-  console.log('Caption:', cardCaptionInput.value);
+
+  // Get values from form fields
+  const newCardData = {
+    name: cardCaptionInput.value,
+    link: cardImageInput.value
+  };
+
+  // Create new card element
+  const newCardElement = getCardElement(newCardData);
+
+  // Add new card as the first element in the card container
+  cardsList.prepend(newCardElement);
+
+  // Optionally, reset the form fields
+  addCardFormElement.reset();
+
+  // Close the modal
   closeModal(newPostModal);
 });

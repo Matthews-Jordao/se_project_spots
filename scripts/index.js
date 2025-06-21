@@ -70,10 +70,16 @@ function getCardElement(data) {
   const cardElement = cardTemplate.content.firstElementChild.cloneNode(true);
   const cardTitle = cardElement.querySelector('.card__title');
   const cardImage = cardElement.querySelector('.card__image');
+  const likeBtn = cardElement.querySelector('.card__like-btn');
 
   cardTitle.textContent = data.name;
   cardImage.src = data.link;
   cardImage.alt = data.name;
+
+  // Like button toggle
+  likeBtn.addEventListener('click', function () {
+    likeBtn.classList.toggle('card__like-btn_active');
+  });
 
   return cardElement;
 }

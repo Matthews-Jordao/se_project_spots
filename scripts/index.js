@@ -24,6 +24,12 @@ const cardCaptionInput = addCardFormElement.querySelector('#card-caption-input')
 const newPostBtn = document.querySelector('.profile__add-btn');
 const newPostCloseBtn = newPostModal.querySelector('.modal__close-btn');
 
+// Preview Modal Elements
+const previewModal = document.getElementById('preview-modal');
+const previewImage = previewModal.querySelector('.modal__preview-image');
+const previewTitle = previewModal.querySelector('.modal__preview-title');
+const previewCloseBtn = previewModal.querySelector('.modal__close-btn');
+
 // Example initialCards array (add your own data as needed)
 const initialCards = [
   {
@@ -87,6 +93,14 @@ function getCardElement(data) {
     cardElement.remove();
   });
 
+  // Preview image modal
+  cardImage.addEventListener('click', function () {
+    previewImage.src = data.link;
+    previewImage.alt = data.name;
+    previewTitle.textContent = data.name;
+    openModal(previewModal);
+  });
+
   return cardElement;
 }
 
@@ -122,6 +136,9 @@ editProfileCloseBtn.addEventListener('click', function () {
 });
 newPostCloseBtn.addEventListener('click', function () {
   closeModal(newPostModal);
+});
+previewCloseBtn.addEventListener('click', function () {
+  closeModal(previewModal);
 });
 
 // Edit Profile form submit

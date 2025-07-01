@@ -104,6 +104,7 @@
   align-items: center;
   gap: 8px;
   justify-content: center;
+  cursor: pointer;
 }
 
 .profile__add-btn:hover {

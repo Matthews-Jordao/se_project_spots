@@ -44,7 +44,7 @@
    ========================= */
 .modal__close-btn,
 #preview-modal .modal__close-btn,
-.modal__close-btn.modal__close_type-preview {
+.modal__close-btn .modal__close_type-preview {
   background: transparent url("../images/whiteclose.svg") center center no-repeat;
   background-size: 40px 40px;
   border: none;

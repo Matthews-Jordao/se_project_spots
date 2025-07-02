@@ -225,8 +225,8 @@
     padding: 4px 8px;
     max-width: 90vw;
   }
+
   #preview-modal .modal__close-btn_type_preview {
-    background-size: 32px 32px;
     right: 0;
     top: -40px;
   }

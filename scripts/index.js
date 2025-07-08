@@ -1,6 +1,3 @@
-// Log to verify script is connected
-console.log('Script loaded!');
-
 // Modal open/close class
 const MODAL_OPENED_CLASS = 'modal_is-opened';
 
@@ -62,10 +59,10 @@ const initialCards = [
   }
 ];
 
-// 2. Loop through the array and log each card's name
-initialCards.forEach(function(card) {
-  console.log(card.name);
-});
+//// 2. Loop through the array and log each card's name
+//initialCards.forEach(function(card) {
+//  console.log(card.name);
+//});
 
 // Select the template and the cards container
 const cardTemplate = document.getElementById('card-template');
@@ -113,10 +110,38 @@ initialCards.forEach(function(cardData) {
 // Utility functions
 function openModal(modal) {
   modal.classList.add(MODAL_OPENED_CLASS);
+
+  // Add Escape key listener when modal opens
+  function handleEscClose(evt) {
+    if (evt.key === "Escape") {
+      closeModal(modal);
+    }
+  }
+  modal._handleEscClose = handleEscClose; // Store reference for removal
+  document.addEventListener("keydown", handleEscClose);
 }
+
 function closeModal(modal) {
   modal.classList.remove(MODAL_OPENED_CLASS);
+
+  // Remove Escape key listener when modal closes
+  if (modal._handleEscClose) {
+    document.removeEventListener("keydown", modal._handleEscClose);
+    modal._handleEscClose = null;
+  }
 }
+
+// Close modal when clicking on overlay (outside modal__container)
+function setOverlayClose(modal) {
+  modal.addEventListener('mousedown', function (evt) {
+    if (evt.target === modal) {
+      closeModal(modal);
+    }
+  });
+}
+
+// Set overlay close for all modals
+[editProfileModal, newPostModal, previewModal].forEach(setOverlayClose);
 
 // Open Edit Profile Modal and pre-fill fields
 editProfileBtn.addEventListener('click', function () {

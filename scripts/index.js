@@ -140,15 +140,13 @@ editProfileBtn.addEventListener('click', () => {
   descriptionInput.value = profileDescriptionElement.textContent;
 
   // Reset errors and update button state before opening
-  resetValidation(profileFormElement, validationConfig); //
+  resetValidation(profileFormElement, validationConfig);
 
   openModal(editProfileModal);
 });
 
-// Open New Post Modal
+// Open New Post Modal (do NOT reset form here)
 newPostBtn.addEventListener('click', () => {
-  // Reset errors and disable the submit button before opening
-  resetValidation(addCardFormElement, validationConfig); // ADDED THIS LINE
   openModal(newPostModal);
 });
 

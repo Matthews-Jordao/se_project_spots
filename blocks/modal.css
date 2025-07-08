@@ -64,7 +64,7 @@
 .modal__close-btn {
   right: 50px;
   top: 32px;
-  background-image: url("../images/close.svg");
+  background-image: url("../images//close-btn.svg");
 }
 
 #preview-modal .modal__close-btn,
@@ -137,7 +137,7 @@
   color: rgba(255, 0, 0, 0.7);
   font-family: Poppins;
   font-weight: 500;
-  font-style: Medium;
+  font-style: medium;
   font-size: 16px;
   margin: 8px 0 0;
 }

@@ -60,6 +60,21 @@ const setEventListeners = (formElement, config) => {
   });
 };
 
+// Clear all errors and disable submit button (for form reset)
+const resetValidation = (formElement, config) => {
+  const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
+  const buttonElement = formElement.querySelector(config.submitButtonSelector);
+
+  inputList.forEach(inputElement => {
+    const errorElement = formElement.querySelector(`#${inputElement.id}-error`);
+    errorElement.textContent = '';
+    inputElement.classList.remove(config.inputErrorClass);
+  });
+
+  buttonElement.disabled = true;
+  // opacity handled by CSS for disabled button
+};
+
 // Enable validation on all forms that match selector
 const enableValidation = (config) => {
   const formList = document.querySelectorAll(config.formSelector);
@@ -70,3 +85,5 @@ const enableValidation = (config) => {
 
 // Initialize validation
 enableValidation(validationConfig);
+
+

@@ -1,3 +1,17 @@
+import './index.css';
+import '../blocks/modal.css';
+import '../blocks/profile.css';
+import '../blocks/card.css';
+import '../blocks/cards.css';
+import '../blocks/footer.css';
+import '../blocks/header.css';
+
+import { enableValidation, resetValidation, validationConfig } from '../scripts/validation.js';
+import logoSrc from '../images/Logo.svg';
+import avatarSrc from '../images/Avatar.png';
+import plusSrc from '../images/plus.svg';
+import trashIconSrc from '../images/Trash.svg';
+
 // Modal open/close class
 const MODAL_OPENED_CLASS = 'modal_is-opened';
 
@@ -70,10 +84,13 @@ function getCardElement(data) {
   const cardImage = cardElement.querySelector('.card__image');
   const likeBtn = cardElement.querySelector('.card__like-btn');
   const deleteBtn = cardElement.querySelector('.card__delete-btn');
+  const deleteIcon = cardElement.querySelector('.card__delete-icon');
 
   cardTitle.textContent = data.name;
   cardImage.src = data.link;
   cardImage.alt = data.name;
+
+  if (deleteIcon) deleteIcon.src = trashIconSrc;
 
   likeBtn.addEventListener('click', () => {
     likeBtn.classList.toggle('card__like-btn_active');
@@ -181,3 +198,15 @@ addCardFormElement.addEventListener('submit', (evt) => {
 
   closeModal(newPostModal);
 });
+
+// Enable validation
+enableValidation(validationConfig);
+
+const headerLogo = document.querySelector('.header__logo');
+if (headerLogo) headerLogo.src = logoSrc;
+
+const profileAvatar = document.querySelector('.profile__avatar');
+if (profileAvatar) profileAvatar.src = avatarSrc;
+
+const addBtnImg = document.querySelector('.profile__add-btn img');
+if (addBtnImg) addBtnImg.src = plusSrc;

@@ -1,5 +1,5 @@
 // Configuration object
-const validationConfig = {
+export const validationConfig = {
   formSelector: ".modal__form",
   inputSelector: ".modal__input",
   submitButtonSelector: ".modal__submit-btn",
@@ -61,7 +61,7 @@ const setEventListeners = (formElement, config) => {
 };
 
 // Clear all errors and disable submit button (for form reset)
-const resetValidation = (formElement, config) => {
+export const resetValidation = (formElement, config) => {
   const inputList = Array.from(formElement.querySelectorAll(config.inputSelector));
   const buttonElement = formElement.querySelector(config.submitButtonSelector);
 
@@ -76,7 +76,7 @@ const resetValidation = (formElement, config) => {
 };
 
 // Enable validation on all forms that match selector
-const enableValidation = (config) => {
+export const enableValidation = (config) => {
   const formList = document.querySelectorAll(config.formSelector);
   formList.forEach((formElement) => {
     setEventListeners(formElement, config);

@@ -11,6 +11,7 @@ import logoSrc from '../images/Logo.svg';
 import avatarSrc from '../images/Avatar.png';
 import plusSrc from '../images/plus.svg';
 import trashIconSrc from '../images/Trash.svg';
+import Api from '../scripts/Api.js';
 
 // Modal open/close class
 const MODAL_OPENED_CLASS = 'modal_is-opened';
@@ -45,37 +46,60 @@ const previewCloseBtn = previewModal.querySelector('.modal__close-btn');
 const cardTemplate = document.getElementById('card-template');
 const cardsList = document.querySelector('.cards__list');
 
-// Initial cards
-const initialCards = [
-  {
-    name: "Landscape Example",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg"
-  },
-  {
-    name: "Val Thorens",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg"
-  },
-  {
-    name: "Restaurant terrace",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg"
-  },
-  {
-    name: "An outdoor cafe",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg"
-  },
-  {
-    name: "A very long bridge, over the forest and through the trees",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg"
-  },
-  {
-    name: "Tunnel with morning light",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg"
-  },
-  {
-    name: "Mountain house",
-    link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg"
+// // Initial cards
+// const initialCards = [
+//   {
+//     name: "Landscape Example",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/7-photo-by-griffin-wooldridge-from-pexels.jpg"
+//   },
+//   {
+//     name: "Val Thorens",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/1-photo-by-moritz-feldmann-from-pexels.jpg"
+//   },
+//   {
+//     name: "Restaurant terrace",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/2-photo-by-ceiline-from-pexels.jpg"
+//   },
+//   {
+//     name: "An outdoor cafe",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/3-photo-by-tubanur-dogan-from-pexels.jpg"
+//   },
+//   {
+//     name: "A very long bridge, over the forest and through the trees",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/4-photo-by-maurice-laschet-from-pexels.jpg"
+//   },
+//   {
+//     name: "Tunnel with morning light",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/5-photo-by-van-anh-nguyen-from-pexels.jpg"
+//   },
+//   {
+//     name: "Mountain house",
+//     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/spots/6-photo-by-moritz-feldmann-from-pexels.jpg"
+//   }
+// ];
+
+// API instance
+
+const api = new Api({
+  baseUrl: 'https://around-api.en.tripleten-services.com/v1',
+  headers: {
+    authorization: "8bae3b2e-af0a-4971-b60d-c632aa9e9531",
+    'Content-Type': 'application/json'
   }
-];
+});
+
+
+// Load initial cards from API
+api.getInitialCards().then(cards => {
+    cards.forEach(cardData => {
+      const cardElement = getCardElement(cardData);
+      cardsList.append(cardElement);
+    });
+    console.log(cards);
+  })
+  .catch(err => console.error('Error loading initial cards:', err));
+
+
 
 // Create card DOM element
 function getCardElement(data) {
@@ -111,10 +135,7 @@ function getCardElement(data) {
 }
 
 // Render initial cards
-initialCards.forEach((cardData) => {
-  const cardElement = getCardElement(cardData);
-  cardsList.append(cardElement);
-});
+// ...existing code...
 
 // Modal open function
 function openModal(modal) {
@@ -210,3 +231,4 @@ if (profileAvatar) profileAvatar.src = avatarSrc;
 
 const addBtnImg = document.querySelector('.profile__add-btn img');
 if (addBtnImg) addBtnImg.src = plusSrc;
+

@@ -11,7 +11,7 @@ import logoSrc from '../images/Logo.svg';
 import avatarSrc from '../images/Avatar.png';
 import plusSrc from '../images/plus.svg';
 import trashIconSrc from '../images/Trash.svg';
-import Api from '../scripts/Api.js';
+import Api from '../utils/Api.js';
 
 // Modal open/close class
 const MODAL_OPENED_CLASS = 'modal_is-opened';
@@ -134,8 +134,6 @@ function getCardElement(data) {
   return cardElement;
 }
 
-// Render initial cards
-// ...existing code...
 
 // Modal open function
 function openModal(modal) {

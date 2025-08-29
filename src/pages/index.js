@@ -90,16 +90,24 @@ const api = new Api({
 
 
 // Load initial cards from API
-api.getInitialCards().then(cards => {
-    cards.forEach(cardData => {
-      const cardElement = getCardElement(cardData);
-      cardsList.append(cardElement);
-    });
-    console.log(cards);
-  })
-  .catch(err => console.error('Error loading initial cards:', err));
 
-
+api
+.getAppInfo()
+.then(([cards, userInfo]) => {
+  // Set user info in header/profile
+  profileNameElement.textContent = userInfo.name;
+  profileDescriptionElement.textContent = userInfo.about;
+  const profileAvatar = document.querySelector('.profile__avatar');
+  if (profileAvatar) profileAvatar.src = userInfo.avatar;
+  // Render cards
+  cards.forEach(cardData => {
+    const cardElement = getCardElement(cardData);
+    cardsList.append(cardElement);
+  });
+  console.log(cards);
+  console.log(userInfo);
+})
+.catch(err => console.error('Error loading user info or cards:', err));
 
 // Create card DOM element
 function getCardElement(data) {
@@ -194,9 +202,17 @@ previewCloseBtn.addEventListener('click', () => closeModal(previewModal));
 // Submit Edit Profile Form
 profileFormElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  profileNameElement.textContent = nameInput.value;
-  profileDescriptionElement.textContent = descriptionInput.value;
-  closeModal(editProfileModal);
+  const newName = nameInput.value;
+  const newAbout = descriptionInput.value;
+  api.editUserInfo({ name: newName, about: newAbout })
+    .then((userInfo) => {
+      profileNameElement.textContent = userInfo.name;
+      profileDescriptionElement.textContent = userInfo.about;
+      closeModal(editProfileModal);
+    })
+    .catch((err) => {
+      console.error('Error updating profile:', err);
+    });
 });
 
 // Submit New Post Form

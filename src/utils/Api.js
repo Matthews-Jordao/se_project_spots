@@ -1,9 +1,30 @@
 class Api {
+  editUserInfo({ name, about }) {
+    return fetch(`${this._baseUrl}/users/me`, {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify({
+        name,
+        about,
+      }),
+    }).then(res => {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`Error: ${res.status}`);
+    });
+  }
   constructor({ baseUrl, headers }) {
     this._baseUrl = baseUrl;
     this._headers = headers;
   }
 
+  getAppInfo() {
+    return Promise.all([
+      this.getInitialCards(),
+      this.getUserInfo()
+    ]);
+  }
 
   getInitialCards() {
     return fetch(`${this._baseUrl}/cards`, {
@@ -27,12 +48,7 @@ class Api {
     });
   }
 
-  loadAppData() {
-    return Promise.all([
-      this.getUserInfo(),
-      this.getInitialCards()
-    ]);
-  }
+
 }
 
 export default Api;

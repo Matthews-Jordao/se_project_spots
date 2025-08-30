@@ -14,7 +14,7 @@ import trashIconSrc from '../images/Trash.svg';
 import Api from '../utils/Api.js';
 
 // Modal open/close class
-const MODAL_OPENED_CLASS = 'modal_is-opened';
+const MODAL_OPENED_CLASS = 'modal__is-opened';
 
 // Profile display elements
 const profileNameElement = document.querySelector('.profile__name');
@@ -47,6 +47,10 @@ const confirmDeleteModal = document.getElementById('delete-card-modal');
 const confirmDeleteBtn = confirmDeleteModal.querySelector('.modal__confirm-delete_btn');
 const cancelDeleteBtn = confirmDeleteModal.querySelector('.modal__cancel-btn');
 const confirmDeleteCloseBtn = confirmDeleteModal.querySelector('.modal__close-btn');
+
+// Edit Avatar Modal
+const editAvatarModal = document.getElementById('edit-avatar-modal');
+const editAvatarCloseBtn = editAvatarModal.querySelector('.modal__close-btn');
 
 // Variables to store selected card and its ID
 let selectedCard = null;
@@ -210,23 +214,56 @@ function setOverlayClose(modal) {
   });
 }
 
-[editProfileModal, newPostModal, previewModal, confirmDeleteModal].forEach(setOverlayClose);
+[editProfileModal, newPostModal, previewModal, confirmDeleteModal, editAvatarModal].forEach(setOverlayClose);
 
 // Open Edit Profile Modal
-editProfileBtn.addEventListener('click', () => {
-  nameInput.value = profileNameElement.textContent;
-  descriptionInput.value = profileDescriptionElement.textContent;
+if (editProfileBtn) {
+  editProfileBtn.addEventListener('click', () => {
+    console.log('Edit Profile button clicked');
+    if (!editProfileModal) {
+      console.error('editProfileModal not found');
+      return;
+    }
+    nameInput.value = profileNameElement.textContent;
+    descriptionInput.value = profileDescriptionElement.textContent;
+    resetValidation(profileFormElement, validationConfig);
+    openModal(editProfileModal);
+    console.log('Edit Profile modal opened');
+  });
+} else {
+  console.error('editProfileBtn not found');
+}
 
-  // Reset errors and update button state before opening
-  resetValidation(profileFormElement, validationConfig);
+// Open New Post Modal
+if (newPostBtn) {
+  newPostBtn.addEventListener('click', () => {
+    console.log('New Post button clicked');
+    if (!newPostModal) {
+      console.error('newPostModal not found');
+      return;
+    }
+    openModal(newPostModal);
+    console.log('New Post modal opened');
+  });
+} else {
+  console.error('newPostBtn not found');
+}
 
-  openModal(editProfileModal);
-});
-
-// Open New Post Modal (do NOT reset form here)
-newPostBtn.addEventListener('click', () => {
-  openModal(newPostModal);
-});
+// Open Edit Avatar Modal
+const editAvatarBtn = document.querySelector('.profile__avatar-btn');
+if (editAvatarBtn) {
+  editAvatarBtn.addEventListener('click', () => {
+    console.log('Edit Avatar button clicked');
+    if (!editAvatarModal) {
+      console.error('editAvatarModal not found');
+      return;
+    }
+    openModal(editAvatarModal);
+    console.log('Edit Avatar modal opened');
+  });
+} else {
+  console.error('editAvatarBtn not found');
+}
 
 // Close modals
 editProfileCloseBtn.addEventListener('click', () => closeModal(editProfileModal));
@@ -234,6 +271,7 @@ newPostCloseBtn.addEventListener('click', () => closeModal(newPostModal));
 previewCloseBtn.addEventListener('click', () => closeModal(previewModal));
 confirmDeleteCloseBtn.addEventListener('click', () => closeModal(confirmDeleteModal));
 cancelDeleteBtn.addEventListener('click', () => closeModal(confirmDeleteModal));
+editAvatarCloseBtn.addEventListener('click', () => closeModal(editAvatarModal));
 
 
 // Handle delete card: open modal and store references

@@ -15,7 +15,7 @@
   z-index: 1000;
 }
 
-.modal_is-opened {
+.modal__is-opened {
   opacity: 1;
   visibility: visible;
   transition: visibility 0.3s, opacity 0.3s ease-in;
@@ -38,6 +38,27 @@
   position: relative;
   background: transparent;
   box-shadow: none;
+}
+
+/* =========================
+   Modal Title
+   ========================= */
+.modal__title,
+.modal__confirm-delete-title {
+  font-family: Poppins, Arial, sans-serif;
+  font-weight: 500;
+  font-style: medium;
+  font-size: 32px;
+  line-height: 100%;
+  letter-spacing: 0;
+  margin: 0 0 32px 0;
+  color: #212121;
+}
+
+/* Smaller title for confirm delete modal */
+.modal__confirm-delete-title {
+  font-size: 24px;
+  text-align: center;
 }
 
 /* =========================
@@ -64,7 +85,7 @@
 .modal__close-btn {
   right: 50px;
   top: 32px;
-  background-image: url("../images//close-btn.svg");
+  background-image: url("../images/close-btn.svg");
 }
 
 .modal__close-btn_type_preview {
@@ -134,7 +155,7 @@
 .modal__error {
   display: block;
   color: rgba(255, 0, 0, 0.7);
-  font-family: Poppins;
+  font-family: Poppins, Arial, sans-serif;
   font-weight: 500;
   font-style: medium;
   font-size: 16px;
@@ -149,7 +170,6 @@
   color: rgba(33, 33, 33, 0.3);
   padding-left: 12px;
 }
-
 
 .modal__submit-btn:disabled {
   opacity: 0.5;
@@ -208,29 +228,20 @@
 
 .modal__caption {
   color: #fff;
-  font-family: Poppins;
+  font-family: Poppins, Arial, sans-serif;
   font-weight: 500;
   font-size: 20px;
   line-height: 120%;
 }
 
+/* =========================
+   Confirm Delete Modal
+   ========================= */
 .modal__confirm-delete {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-
-}
-
-.modal__confirm-delete-title {
-  font-family: Poppins;
-font-weight: 500;
-font-style: medium;
-font-size: 24px;
-line-height: 100%;
-letter-spacing: 0%;
-text-align: center;
-
 }
 
 .modal__confirm-delete-actions {
@@ -241,10 +252,10 @@ text-align: center;
 }
 
 .modal__confirm-delete_btn {
- background-color:rgba(255, 101, 101, 1);
- color: rgba(33, 33, 33, 1);
-width: 156px;
- max-width: 156px;
+  background-color: rgba(255, 101, 101, 1);
+  color: rgba(33, 33, 33, 1);
+  width: 156px;
+  max-width: 156px;
   height: 52px;
   border-radius: 8px;
   cursor: pointer;
@@ -278,11 +289,11 @@ width: 156px;
   .modal__container {
     padding: 8px;
   }
-  .modal__title {
+  .modal__title,
+  .modal__confirm-delete-title {
     font-size: 20px;
     padding-top: 10px;
   }
-
   .modal__submit-btn {
     max-width: none;
   }
@@ -310,9 +321,6 @@ width: 156px;
     top: -40px;
   }
   .modal__confirm-delete-actions {
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
 }

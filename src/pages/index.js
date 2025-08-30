@@ -134,8 +134,33 @@ function getCardElement(data) {
 
   if (deleteIcon) deleteIcon.src = trashIconSrc;
 
+  // Set initial like state
+  if (data.isLiked) {
+    likeBtn.classList.add('card__like-btn_active');
+  } else {
+    likeBtn.classList.remove('card__like-btn_active');
+  }
+
+  // Like button handler
   likeBtn.addEventListener('click', () => {
-    likeBtn.classList.toggle('card__like-btn_active');
+    const isActive = likeBtn.classList.contains('card__like-btn_active');
+    const cardId = data._id;
+    if (!cardId) return;
+    if (isActive) {
+      api.unlikeCard(cardId)
+        .then(updatedCard => {
+          likeBtn.classList.remove('card__like-btn_active');
+          // Optionally update other UI elements if needed
+        })
+        .catch(err => console.error('Error removing like:', err));
+    } else {
+      api.likeCard(cardId)
+        .then(updatedCard => {
+          likeBtn.classList.add('card__like-btn_active');
+          // Optionally update other UI elements if needed
+        })
+        .catch(err => console.error('Error adding like:', err));
+    }
   });
 
   // Pass card element and card data to delete handler

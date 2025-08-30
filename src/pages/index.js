@@ -284,7 +284,15 @@ function handleDeleteCard(cardElement, data) {
 // Confirm delete: send DELETE request, remove from DOM on success
 function handleDeleteSubmit(evt) {
   evt.preventDefault();
-  if (!selectedCardId || !selectedCard) return;
+  const deleteBtn = confirmDeleteModal.querySelector('.modal__confirm-delete_btn');
+  const originalText = deleteBtn.textContent;
+  deleteBtn.textContent = 'Deleting...';
+  deleteBtn.disabled = true;
+  if (!selectedCardId || !selectedCard) {
+    deleteBtn.textContent = originalText;
+    deleteBtn.disabled = false;
+    return;
+  }
   api.removeCard(selectedCardId)
     .then(() => {
       selectedCard.remove();
@@ -294,6 +302,10 @@ function handleDeleteSubmit(evt) {
     })
     .catch((err) => {
       console.error('Error deleting card:', err);
+    })
+    .finally(() => {
+      deleteBtn.textContent = originalText;
+      deleteBtn.disabled = false;
     });
 }
 
@@ -306,6 +318,10 @@ confirmDeleteBtn.addEventListener('click', (evt) => handleDeleteSubmit(evt));
 // Submit Edit Profile Form
 profileFormElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
+  const submitBtn = profileFormElement.querySelector('.modal__submit-btn');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Saving...';
+  submitBtn.disabled = true;
   const newName = nameInput.value;
   const newAbout = descriptionInput.value;
   api.editUserInfo({ name: newName, about: newAbout })
@@ -316,18 +332,24 @@ profileFormElement.addEventListener('submit', (evt) => {
     })
     .catch((err) => {
       console.error('Error updating profile:', err);
+    })
+    .finally(() => {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
     });
 });
 
 // Submit New Post Form
 addCardFormElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
-
+  const submitBtn = addCardFormElement.querySelector('.modal__submit-btn');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Saving...';
+  submitBtn.disabled = true;
   const newCardData = {
     name: cardCaptionInput.value,
     link: cardImageInput.value
   };
-
   api.addCard(newCardData)
     .then(card => {
       const newCardElement = getCardElement(card);
@@ -338,6 +360,35 @@ addCardFormElement.addEventListener('submit', (evt) => {
     })
     .catch((err) => {
       console.error('Error adding card:', err);
+    })
+    .finally(() => {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
+    });
+});
+
+// Avatar modal: show 'Saving...' while uploading
+const editAvatarFormElement = editAvatarModal.querySelector('.modal__form');
+const avatarUrlInput = editAvatarFormElement.querySelector('#avatar-url-input');
+editAvatarFormElement.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  const submitBtn = editAvatarFormElement.querySelector('.modal__submit-btn');
+  const originalText = submitBtn.textContent;
+  submitBtn.textContent = 'Saving...';
+  submitBtn.disabled = true;
+  const newAvatarUrl = avatarUrlInput.value;
+  api.editUserInfo({ avatar: newAvatarUrl })
+    .then((userInfo) => {
+      const profileAvatar = document.querySelector('.profile__avatar');
+      if (profileAvatar) profileAvatar.src = userInfo.avatar;
+      closeModal(editAvatarModal);
+    })
+    .catch((err) => {
+      console.error('Error updating avatar:', err);
+    })
+    .finally(() => {
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
     });
 });
 

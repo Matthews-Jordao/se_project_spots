@@ -17,7 +17,7 @@
 .profile__avatar-overlay {
   position: absolute;
   top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(0, 0, 0, 0.5); /* black with 50% opacity */
+  background: rgba(0, 0, 0, 0.5);
   border-radius: 8px;
   opacity: 0;
   pointer-events: none;
@@ -30,43 +30,88 @@
   opacity: 1;
 }
 
-/* Avatar image stays below overlay */
-.profile__avatar {
-  display: block;
+/* Avatar button replaces container */
+.profile__avatar-btn {
+  position: relative;
+  display: inline-block;
+  border: none;
+  padding: 0;
+  background: none;
+  cursor: pointer;
   height: 190px;
   width: 190px;
-  margin-right: 20px;
-  border-radius: 8px;
-  position: relative;
-  z-index: 1;
+  overflow: hidden;
 }
 
-.profile__avatar:hover{
+/* Avatar image fills button */
+.profile__avatar {
+  display: block;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  transition: opacity 0.2s;
+}
+
+/* Overlay for darkening avatar on hover */
+.profile__avatar-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5); /* black overlay, 50% opacity */
+  border-radius: 8px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Show overlay on hover */
+.profile__avatar-btn:hover::before {
   opacity: 1;
 }
 
-.profile__avatar-edit-btn {
+/* Text and icon appear at bottom center on hover */
+.profile__avatar-btn-text {
   position: absolute;
   left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
-  background: rgba(33, 33, 33, 0.7);
+  bottom: 12px;
+  transform: translateX(-50%);
   color: #fff;
-  border: none;
-  border-radius: 8px;
-  padding: 12px 24px;
   font-family: Poppins, Arial, sans-serif;
+  font-weight: 500;
   font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
   opacity: 0;
-  pointer-events: none;
   transition: opacity 0.2s;
-  cursor: pointer;
-  z-index: 2;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 3;
 }
 
+/* Show text/icon only on hover */
+.profile__avatar-btn:hover .profile__avatar-btn-text {
+  opacity: 1;
+  pointer-events: auto;
+}
 
-.profile__avatar-edit-btn:hover {
-  background: rgba(33, 33, 33, 0.5);
+/* Pencil icon before the text, matches text height */
+.profile__avatar-btn-icon {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  background-image: url(../images/pencil.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  filter: brightness(0) invert(1);
+  vertical-align: middle;
+}
+
+/* Pointer effect for the whole button */
+.profile__avatar-btn:hover {
+  cursor: pointer;
 }
 
 .profile__column {
@@ -180,11 +225,19 @@
     box-sizing: border-box;
   }
 
-  .profile__avatar {
+  .profile__avatar-btn {
     height: 80px;
     width: 80px;
-    margin-bottom: 12px;
-    margin-right: 0;
+  }
+
+  .profile__avatar-btn-text {
+    font-size: 14px;
+    bottom: 8px;
+  }
+
+  .profile__avatar-btn-icon {
+    width: 14px;
+    height: 14px;
   }
 
   .profile__column {

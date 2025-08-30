@@ -265,14 +265,17 @@ addCardFormElement.addEventListener('submit', (evt) => {
     link: cardImageInput.value
   };
 
-  const newCardElement = getCardElement(newCardData);
-  cardsList.prepend(newCardElement);
-
-  //Clear fields and validation after successful submission
-  addCardFormElement.reset();
-  resetValidation(addCardFormElement, validationConfig);
-
-  closeModal(newPostModal);
+  api.addCard(newCardData)
+    .then(card => {
+      const newCardElement = getCardElement(card);
+      cardsList.prepend(newCardElement);
+      addCardFormElement.reset();
+      resetValidation(addCardFormElement, validationConfig);
+      closeModal(newPostModal);
+    })
+    .catch((err) => {
+      console.error('Error adding card:', err);
+    });
 });
 
 // Enable validation

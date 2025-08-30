@@ -42,6 +42,12 @@ const previewImage = previewModal.querySelector('.modal__preview-image');
 const previewTitle = previewModal.querySelector('.modal__preview-title');
 const previewCloseBtn = previewModal.querySelector('.modal__close-btn');
 
+// Confirm Delete Modal
+const confirmDeleteModal = document.getElementById('delete-card-modal');
+const confirmDeleteBtn = confirmDeleteModal.querySelector('.modal__confirm-delete_btn');
+const cancelDeleteBtn = confirmDeleteModal.querySelector('.modal__cancel-btn');
+const confirmDeleteCloseBtn = confirmDeleteModal.querySelector('.modal__close-btn');
+
 // Template & Cards List
 const cardTemplate = document.getElementById('card-template');
 const cardsList = document.querySelector('.cards__list');
@@ -128,8 +134,10 @@ function getCardElement(data) {
     likeBtn.classList.toggle('card__like-btn_active');
   });
 
+  // Store reference to card to delete
   deleteBtn.addEventListener('click', () => {
-    cardElement.remove();
+    confirmDeleteModal._cardToDelete = cardElement;
+    openModal(confirmDeleteModal);
   });
 
   cardImage.addEventListener('click', () => {
@@ -176,7 +184,7 @@ function setOverlayClose(modal) {
   });
 }
 
-[editProfileModal, newPostModal, previewModal].forEach(setOverlayClose);
+[editProfileModal, newPostModal, previewModal, confirmDeleteModal].forEach(setOverlayClose);
 
 // Open Edit Profile Modal
 editProfileBtn.addEventListener('click', () => {
@@ -198,6 +206,17 @@ newPostBtn.addEventListener('click', () => {
 editProfileCloseBtn.addEventListener('click', () => closeModal(editProfileModal));
 newPostCloseBtn.addEventListener('click', () => closeModal(newPostModal));
 previewCloseBtn.addEventListener('click', () => closeModal(previewModal));
+confirmDeleteCloseBtn.addEventListener('click', () => closeModal(confirmDeleteModal));
+cancelDeleteBtn.addEventListener('click', () => closeModal(confirmDeleteModal));
+
+// Confirm delete action
+confirmDeleteBtn.addEventListener('click', () => {
+  if (confirmDeleteModal._cardToDelete) {
+    confirmDeleteModal._cardToDelete.remove();
+    confirmDeleteModal._cardToDelete = null;
+  }
+  closeModal(confirmDeleteModal);
+});
 
 // Submit Edit Profile Form
 profileFormElement.addEventListener('submit', (evt) => {

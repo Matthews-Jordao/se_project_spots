@@ -13,12 +13,18 @@
   <div class="page">
     <!-- Header -->
     <header class="header">
-      <img src="./images/Logo.svg" alt="spots logo" class="header__logo">
+  <img alt="spots logo" class="header__logo">
     </header>
     <main class="content">
       <!-- Profile Section -->
       <section class="profile page__section">
-        <img src="./images/Avatar.png" alt="Bessie Coleman" class="profile__avatar">
+        <button type="button" class="profile__avatar-btn">
+          <img alt="Profile Photo" class="profile__avatar">
+          <span class="profile__avatar-btn-text">
+            <span class="profile__avatar-btn-icon"></span>
+            Edit avatar
+          </span>
+        </button>
         <div class="profile__column">
           <h1 class="profile__name">Bessie Coleman</h1>
           <p class="profile__description">Civil Aviator</p>
@@ -27,7 +33,7 @@
           </button>
         </div>
         <button type="button" class="profile__add-btn">
-          <img src="./images/plus.svg" alt="Plus icon"> New Post
+          <img alt="Plus icon"> New Post
         </button>
       </section>
       <!-- Cards Section -->
@@ -80,7 +86,7 @@
     </div>
 
     <!-- New Post Modal -->
-    <div class="modal" id="new-post-modal">
+    <div class="modal " id="new-post-modal">
       <div class="modal__container">
         <h2 class="modal__title">New Post</h2>
        <button type="button" class="modal__close-btn" aria-label="Close"></button>
@@ -133,7 +139,43 @@
       </div>
     </div>
 
+    <!-- Delete Card Confirmation Modal -->
+    <div class="modal" id="delete-card-modal">
+      <div class="modal__container modal__confirm-delete">
+        <h2 class="modal__confirm-delete-title">Are you sure you want to delete this image?</h2>
+          <div class="modal__confirm-delete-actions">
+            <button type="submit" class=" modal__confirm-delete_btn">Delete</button>
+            <button type="button" class=" modal__cancel-btn">Cancel</button>
+          </div>
+          <button
+            aria-label="Close modal"
+            class="modal__close-btn modal__close-btn_type_preview"
+            type="button"
+          ></button>
+      </div>
+    </div>
 
+    <!-- Edit Avatar Modal -->
+    <div class="modal" id="edit-avatar-modal">
+      <div class="modal__container">
+        <h2 class="modal__title">Edit profile avatar</h2>
+        <button type="button" class="modal__close-btn" aria-label="Close"></button>
+        <form class="modal__form">
+          <label for="avatar-url-input" class="modal__label">
+            Profile Picture
+            <input
+              id="avatar-url-input"
+              class="modal__input"
+              type="url"
+              placeholder="Paste the link to an image"
+              required
+            />
+            <span class="modal__error" id="avatar-url-input-error"></span>
+          </label>
+          <button type="submit" class="modal__submit-btn">Save</button>
+        </form>
+      </div>
+    </div>
 
     <!-- Card Template -->
     <template id="card-template">

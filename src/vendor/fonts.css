@@ -9,7 +9,7 @@
 /* Poppins Medium */
 @font-face {
   font-family: "Poppins";
-  font-style: normal;
+  font-style: medium;
   font-weight: 500;
   src: url("../vendor/fonts/Poppins-Medium.ttf") format("truetype");
 }

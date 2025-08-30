@@ -377,7 +377,7 @@ editAvatarFormElement.addEventListener('submit', (evt) => {
   submitBtn.textContent = 'Saving...';
   submitBtn.disabled = true;
   const newAvatarUrl = avatarUrlInput.value;
-  api.editUserInfo({ avatar: newAvatarUrl })
+  api.editUserAvatar(newAvatarUrl)
     .then((userInfo) => {
       const profileAvatar = document.querySelector('.profile__avatar');
       if (profileAvatar) profileAvatar.src = userInfo.avatar;

@@ -48,6 +48,10 @@ const confirmDeleteBtn = confirmDeleteModal.querySelector('.modal__confirm-delet
 const cancelDeleteBtn = confirmDeleteModal.querySelector('.modal__cancel-btn');
 const confirmDeleteCloseBtn = confirmDeleteModal.querySelector('.modal__close-btn');
 
+// Variables to store selected card and its ID
+let selectedCard = null;
+let selectedCardId = null;
+
 // Template & Cards List
 const cardTemplate = document.getElementById('card-template');
 const cardsList = document.querySelector('.cards__list');
@@ -134,11 +138,8 @@ function getCardElement(data) {
     likeBtn.classList.toggle('card__like-btn_active');
   });
 
-  // Store reference to card to delete
-  deleteBtn.addEventListener('click', () => {
-    confirmDeleteModal._cardToDelete = cardElement;
-    openModal(confirmDeleteModal);
-  });
+  // Pass card element and card data to delete handler
+  deleteBtn.addEventListener('click', (evt) => handleDeleteCard(cardElement, data));
 
   cardImage.addEventListener('click', () => {
     previewImage.src = data.link;
@@ -209,14 +210,35 @@ previewCloseBtn.addEventListener('click', () => closeModal(previewModal));
 confirmDeleteCloseBtn.addEventListener('click', () => closeModal(confirmDeleteModal));
 cancelDeleteBtn.addEventListener('click', () => closeModal(confirmDeleteModal));
 
-// Confirm delete action
-confirmDeleteBtn.addEventListener('click', () => {
-  if (confirmDeleteModal._cardToDelete) {
-    confirmDeleteModal._cardToDelete.remove();
-    confirmDeleteModal._cardToDelete = null;
-  }
-  closeModal(confirmDeleteModal);
-});
+
+// Handle delete card: open modal and store references
+function handleDeleteCard(cardElement, data) {
+  selectedCard = cardElement;
+  selectedCardId = data._id;
+  openModal(confirmDeleteModal);
+}
+
+// Confirm delete: send DELETE request, remove from DOM on success
+function handleDeleteSubmit(evt) {
+  evt.preventDefault();
+  if (!selectedCardId || !selectedCard) return;
+  api.removeCard(selectedCardId)
+    .then(() => {
+      selectedCard.remove();
+      selectedCard = null;
+      selectedCardId = null;
+      closeModal(confirmDeleteModal);
+    })
+    .catch((err) => {
+      console.error('Error deleting card:', err);
+    });
+}
+
+// Attach submit handler to the delete form
+confirmDeleteModal.querySelector('.modal__confirm-delete-actions').addEventListener('submit', handleDeleteSubmit);
+
+// Also allow button click for delete (for non-form button)
+confirmDeleteBtn.addEventListener('click', (evt) => handleDeleteSubmit(evt));
 
 // Submit Edit Profile Form
 profileFormElement.addEventListener('submit', (evt) => {

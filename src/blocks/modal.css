@@ -15,7 +15,7 @@
   z-index: 1000;
 }
 
-.modal__is-opened {
+ .modal_is-opened {
   opacity: 1;
   visibility: visible;
   transition: visibility 0.3s, opacity 0.3s ease-in;

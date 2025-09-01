@@ -14,7 +14,7 @@ import trashIconSrc from '../images/Trash.svg';
 import Api from '../utils/Api.js';
 
 // Modal open/close class
-const MODAL_OPENED_CLASS = 'modal__is-opened';
+const MODAL_OPENED_CLASS = 'modal_is-opened';
 
 // Profile display elements
 const profileNameElement = document.querySelector('.profile__name');
@@ -198,7 +198,6 @@ function openModal(modal) {
 // Modal close function
 function closeModal(modal) {
   modal.classList.remove(MODAL_OPENED_CLASS);
-
   if (modal._handleEscClose) {
     document.removeEventListener("keydown", modal._handleEscClose);
     modal._handleEscClose = null;
@@ -381,12 +380,11 @@ editAvatarFormElement.addEventListener('submit', (evt) => {
     .then((userInfo) => {
       const profileAvatar = document.querySelector('.profile__avatar');
       if (profileAvatar) profileAvatar.src = userInfo.avatar;
+      editAvatarFormElement.reset();
       closeModal(editAvatarModal);
     })
     .catch((err) => {
       console.error('Error updating avatar:', err);
-    })
-    .finally(() => {
       submitBtn.textContent = originalText;
       submitBtn.disabled = false;
     });

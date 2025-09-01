@@ -369,9 +369,22 @@ addCardFormElement.addEventListener('submit', (evt) => {
 // Avatar modal: show 'Saving...' while uploading
 const editAvatarFormElement = editAvatarModal.querySelector('.modal__form');
 const avatarUrlInput = editAvatarFormElement.querySelector('#avatar-url-input');
+const avatarSubmitBtn = editAvatarFormElement.querySelector('.modal__submit-btn');
+
+// Disable submit button if field empty
+function toggleAvatarSubmitBtn() {
+  avatarSubmitBtn.disabled = !avatarUrlInput.value.trim();
+}
+avatarUrlInput.addEventListener('input', toggleAvatarSubmitBtn);
+
+// Initialize button state on modal open
+editAvatarBtn.addEventListener('click', () => {
+  toggleAvatarSubmitBtn();
+});
+
 editAvatarFormElement.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  const submitBtn = editAvatarFormElement.querySelector('.modal__submit-btn');
+  const submitBtn = avatarSubmitBtn;
   const originalText = submitBtn.textContent;
   submitBtn.textContent = 'Saving...';
   submitBtn.disabled = true;
@@ -382,6 +395,8 @@ editAvatarFormElement.addEventListener('submit', (evt) => {
       if (profileAvatar) profileAvatar.src = userInfo.avatar;
       editAvatarFormElement.reset();
       closeModal(editAvatarModal);
+      submitBtn.textContent = originalText;
+      submitBtn.disabled = false;
     })
     .catch((err) => {
       console.error('Error updating avatar:', err);

@@ -354,15 +354,14 @@ addCardFormElement.addEventListener('submit', (evt) => {
       const newCardElement = getCardElement(card);
       cardsList.prepend(newCardElement);
       addCardFormElement.reset();
-      resetValidation(addCardFormElement, validationConfig);
       closeModal(newPostModal);
     })
     .catch((err) => {
-      console.error('Error adding card:', err);
+      console.error("Error adding card:", err);
+      submitBtn.disabled = false;
     })
     .finally(() => {
       submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
     });
 });
 
@@ -395,13 +394,13 @@ editAvatarFormElement.addEventListener('submit', (evt) => {
       if (profileAvatar) profileAvatar.src = userInfo.avatar;
       editAvatarFormElement.reset();
       closeModal(editAvatarModal);
-      submitBtn.textContent = originalText;
-      submitBtn.disabled = false;
     })
     .catch((err) => {
       console.error('Error updating avatar:', err);
-      submitBtn.textContent = originalText;
       submitBtn.disabled = false;
+    })
+    .finally(() => {
+      submitBtn.textContent = originalText;
     });
 });
 
